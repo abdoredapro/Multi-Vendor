@@ -23,7 +23,7 @@ class AuthServiceProvider extends ServiceProvider
         parent::register();
 
         $this->app->bind('abilities', function () {
-            return include base_path('data\ability.php');
+            return include base_path('data/ability.php');
         });
 
     }
