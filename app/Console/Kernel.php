@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         // $schedule->job(new DeleteExpiredOrders)->hourlyAt('03:00');
-        $schedule->command(TestCommand::class)->everyMinute();
+        // $schedule->command(TestCommand::class)->everyMinute();
     }
 
     /**
