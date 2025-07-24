@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\TestCommand;
 use App\Jobs\DeleteExpiredOrders;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -14,7 +15,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->job(new DeleteExpiredOrders)->hourlyAt('03:00');
+        // $schedule->job(new DeleteExpiredOrders)->hourlyAt('03:00');
+        $schedule->command(TestCommand::class)->everyMinute();
     }
 
     /**
