@@ -20,4 +20,6 @@ jobs:
         script: |
           cd /home/multi_vendor/multi_vendor
           git pull origin main
-          ./deploy.sh
+          ./build.sh
+
+
