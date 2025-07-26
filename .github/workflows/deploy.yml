@@ -20,6 +20,7 @@ jobs:
         script: |
           cd /home/multi_vendor/multi_vendor
           git pull origin main
+          ech o "Building the project..."
           ./build.sh
 
 
