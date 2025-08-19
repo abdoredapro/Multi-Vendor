@@ -18,7 +18,7 @@ jobs:
         username: multi_vendor
         key: ${{ secrets.SSH_KEY }}
         script: |
-          cd /home/multi_vendor
-          ./redeploy.sh
+          cd /home/multi_vendor/multi_vendor
+          ./docker/redeploy.sh
 
 
