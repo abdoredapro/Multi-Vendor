@@ -22,6 +22,8 @@ RUN composer install --prefer-dist --no-dev --no-scripts --no-interaction --opti
 
 COPY . .
 
+RUN chmod +x docker/build.sh
+
 ENTRYPOINT [ "/var/www/html/docker/build.sh" ]
 
 
