@@ -2,6 +2,8 @@
 
 echo "Start polling for changes"
 
+cd /home/multi_vendor/multi_vendor
+
 git pull origin main
 
 echo "📦 Installing composer dependencies..."
