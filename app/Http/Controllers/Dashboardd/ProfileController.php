@@ -31,9 +31,5 @@ class ProfileController extends Controller
         return redirect()->route('dashboard.profile.edit')->with([
             'success' => 'Profile Updated'
         ]);
-
-        
-
-
     }
 }

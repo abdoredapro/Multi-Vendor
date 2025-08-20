@@ -16,6 +16,8 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
+RUN chown -R www-data:www-data /var/www/html
+
 COPY composer.json composer.lock ./
 
 RUN composer install --prefer-dist --no-dev --no-scripts --no-interaction --optimize-autoloader
