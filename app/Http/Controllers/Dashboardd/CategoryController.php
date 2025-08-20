@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\Dashboardd;
 
 use App\Models\Category;
 use Illuminate\Http\Request;

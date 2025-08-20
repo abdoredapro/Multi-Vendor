@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\Dashboardd;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;

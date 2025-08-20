@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\SocialLoginController;
-use App\Http\Controllers\dashboard\DashboardController;
+use App\Http\Controllers\Dashboardd\DashboardController;
 use App\Http\Controllers\Front\auth\twoFactorAuthenticationController as AuthTwoFactorAuthenticationController;
 use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\CheckoutController;
