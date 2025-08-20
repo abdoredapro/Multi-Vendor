@@ -16,17 +16,16 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-RUN chown -R www-data:www-data /var/www/html
-
-COPY composer.json composer.lock ./
-
-RUN composer install --prefer-dist --no-dev --no-scripts --no-interaction --optimize-autoloader
-
+# نسخ ملفات المشروع قبل git config
 COPY . .
 
-RUN chmod +x docker/build.sh
+# ضبط الأذونات
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod +x docker/build.sh \
+    && git config --global --add safe.directory /var/www/html
 
-ENTRYPOINT [ "/var/www/html/docker/build.sh" ]
+# تثبيت composer
+RUN composer install --prefer-dist --no-dev --no-interaction --optimize-autoloader
 
-
-
+# تشغيل السكربت
+ENTRYPOINT ["sh", "/var/www/html/docker/build.sh"]
