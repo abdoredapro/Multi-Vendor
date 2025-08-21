@@ -6,3 +6,7 @@ composer install --no-dev --optimize-autoloader
 php artisan migrate --force
 
 echo "Build completed successfully!"
+
+exec php-fpm
+
+
