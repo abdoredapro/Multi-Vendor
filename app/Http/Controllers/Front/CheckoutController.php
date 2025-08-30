@@ -39,7 +39,6 @@ class CheckoutController extends Controller
 
             $stores = $cart->get()->groupBy('product.store_id')->all();
 
-
             foreach($stores as $store_id => $cart_item) {
 
                 $order = Order::create([
