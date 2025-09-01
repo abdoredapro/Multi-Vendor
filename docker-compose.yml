@@ -9,6 +9,8 @@ services:
     depends_on:
       - db
     command: php-fpm
+    networks:
+      - multi_vendor_net
 
   web:
     container_name: nginx-service
@@ -20,6 +22,8 @@ services:
       - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     depends_on:
       - app
+    networks:
+      - multi_vendor_net
       
   db:
     image: mysql:5.7
@@ -34,6 +38,8 @@ services:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
+    networks:
+      - multi_vendor_net
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -47,5 +53,11 @@ services:
       PMA_PASSWORD: laravelpass
     depends_on:
       - db
+    networks:
+      - multi_vendor_net
 volumes:
   db_data:
+
+networks:
+  multi_vendor_net:
+    driver: bridge
