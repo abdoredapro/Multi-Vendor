@@ -16,6 +16,8 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
+USER www-data
+
 RUN chown -R www-data:www-data /var/www/html
 RUN git config --global --add safe.directory /var/www/html
 

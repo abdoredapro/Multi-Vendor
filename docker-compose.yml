@@ -42,7 +42,7 @@ services:
       - multi_vendor_net
 
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
+    image: phpmyadmin/phpmyadmin:5.1.1
     restart: always
     ports:
       - "8080:80"
