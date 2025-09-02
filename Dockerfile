@@ -19,7 +19,8 @@ WORKDIR /var/www/html
 USER www-data
 
 RUN chown -R www-data:www-data /var/www/html
-RUN git config --global --add safe.directory /var/www/html
+RUN git config --system --add safe.directory /var/www/html
+
 
 COPY composer.json composer.lock ./
 RUN composer install --prefer-dist --no-dev --no-scripts --no-interaction --optimize-autoloader
