@@ -10,5 +10,4 @@ fi
 # Run migrations
 php artisan migrate --force
 
-
 exec php-fpm
