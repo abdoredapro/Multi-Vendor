@@ -36,6 +36,8 @@ COPY . /var/www
 
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
+RUN chmod -R 775 /var/www/storage /var/www/bootstrap/cache
+
 RUN chmod +x docker/build.sh
 
 ENTRYPOINT [ "sh", "docker/build.sh" ]
