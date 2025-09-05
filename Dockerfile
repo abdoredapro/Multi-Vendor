@@ -1,6 +1,6 @@
 FROM php:8.3-fpm-alpine
 
-RUN apk add \
+RUN apk add --no-cache \
     icu-dev \
     oniguruma-dev \
     libzip-dev \
@@ -18,10 +18,7 @@ RUN apk add \
     git \
     curl \
     && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
-    && docker-php-ext-install -j$(nproc) pdo_mysql zip bcmath exif opcache intl gd \
-    && rm -rf /var/cache/apk/*
-
-
+    && docker-php-ext-install -j$(nproc) pdo_mysql zip bcmath exif opcache intl gd
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -31,13 +28,12 @@ COPY composer.json composer.lock /var/www/
 
 RUN composer install --no-dev --no-scripts --prefer-dist --no-interaction
 
-
 COPY . /var/www
 
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
-
-RUN chmod -R 775 /var/www/storage /var/www/bootstrap/cache
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache \
+    && chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
 RUN chmod +x docker/build.sh
 
-ENTRYPOINT [ "sh", "docker/build.sh" ]
+# تعيين ENTRYPOINT
+ENTRYPOINT ["sh", "docker/build.sh"]
