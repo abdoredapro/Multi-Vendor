@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd multi_vendor_backend/
+# Navigate to project root if not already there
 
 echo "📡 Pulling from GitHub..."
 git pull origin main
