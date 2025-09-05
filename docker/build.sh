@@ -7,8 +7,6 @@ if [ ! -f .env ]; then
     cp .env.example .env
 fi
 
-composer install --no-dev --no-interaction --optimize-autoloader
-
 # Run migrations
 php artisan migrate --force
 
