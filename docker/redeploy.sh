@@ -1,7 +1,8 @@
 #!/bin/bash
 
-echo "Start polling for changes"
-cd /multi_vendor
+cd /multi_vendor_backend
+
+echo "📡 Pulling from GitHub..."
 git pull origin main
 
 echo "📦 Installing composer dependencies..."

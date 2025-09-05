@@ -1,35 +1,27 @@
-FROM php:8.3-fpm
+FROM php:8.3-fpm-alpine
 
-RUN apt-get update && apt-get install -y \
-    libfreetype-dev \
-    libjpeg62-turbo-dev \
-    libpng-dev \
+RUN apk update && apk add --no-cache \
+    icu-dev \
+    oniguruma-dev \
     libzip-dev \
+    libpng-dev \
+    libjpeg-turbo-dev \
+    freetype-dev \
+    libwebp-dev \
+    zip \
     unzip \
-    libicu-dev \
-    git \
-    curl \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd pdo pdo_mysql zip intl
-
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-
-WORKDIR /var/www/html
+    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
+    && docker-php-ext-install -j$(nproc) pdo_mysql zip bcmath exif opcache intl gd
 
 
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN chown -R www-data:www-data /var/www/html
+WORKDIR /var/www
 
-RUN git config --system --add safe.directory /var/www/html
+COPY . /var/www
 
-USER www-data
+USER multi_vendor
 
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
-COPY composer.json composer.lock ./
-RUN composer install --prefer-dist --no-dev --no-scripts --no-interaction --optimize-autoloader
-
-COPY . .
-
-RUN chmod +x docker/build.sh
-
-CMD ["/var/www/html/docker/build.sh"]
+ENTRYPOINT [ "docker/build.sh" ]
