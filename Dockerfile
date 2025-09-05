@@ -1,6 +1,6 @@
 FROM php:8.3-fpm-alpine
 
-RUN RUN apk add --no-cache icu-dev ...  \
+RUN apk add \
     icu-dev \
     oniguruma-dev \
     libzip-dev \
@@ -10,24 +10,29 @@ RUN RUN apk add --no-cache icu-dev ...  \
     libwebp-dev \
     zip \
     unzip \
+    bash \
+    autoconf \
+    g++ \
+    make \
+    pkgconf \
+    git \
+    curl \
     && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
-    && docker-php-ext-install -j$(nproc) pdo_mysql zip bcmath exif opcache intl gd
+    && docker-php-ext-install -j$(nproc) pdo_mysql zip bcmath exif opcache intl gd \
+    && rm -rf /var/cache/apk/*
+
 
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 WORKDIR /var/www
 
-# 1- انسخ بس composer.json
 COPY composer.json composer.lock /var/www/
 
-# 2- اعمل install
 RUN composer install --no-dev --no-scripts --prefer-dist --no-interaction
 
-# 3- انسخ باقي الملفات
-COPY . /var/www
 
-USER multi_vendor
+COPY . /var/www
 
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
