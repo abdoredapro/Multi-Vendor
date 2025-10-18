@@ -14,11 +14,11 @@ jobs:
     - name: Deploy using ssh
       uses: appleboy/ssh-action@v1.1.0
       with:
-        host: ${{ secrets.SSH_HOST }}
-        username: multi_vendor
+        host: 13.49.21.197
+        username: auto_wash
         key: ${{ secrets.SSH_KEY }}
         script: |
-          cd /home/multi_vendor
+          cd /home/auto_wash
           ./redeploy.sh
 
 

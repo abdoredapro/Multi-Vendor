@@ -1,13 +1,17 @@
-#!/bin/bash
+#!/bin/sh
 
-set -e
+cd /var/www
 
-# Check if .env not exists
-if [ ! -f .env ]; then
-    cp .env.example .env
-fi
+php artisan storage:link
+php artisan package:discover --ansi
+# php artisan vendor:publish --tag=laravel-assets --ansi --force
 
-# Run migrations
+chmod 777 /var/www/bootstrap/cache
+chmod -R 775 /var/www/storage
+chown -R www:www-data .
+
 php artisan migrate --force
 
-exec php-fpm
+/usr/bin/supervisord -c /etc/supervisord.conf
+
+php artisan optimize

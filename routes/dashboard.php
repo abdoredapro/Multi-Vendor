@@ -14,39 +14,39 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 
-Route::group([
+// Route::group([
     
-    'middleware'=> ['auth:admin', 'verified'],
-    'as'=> 'dashboard.',
-    'prefix' => 'admin/dashboard'
+//     'middleware'=> ['auth:admin', 'verified'],
+//     'as'=> 'dashboard.',
+//     'prefix' => 'admin/dashboard'
 
-], function () {
+// ], function () {
 
     
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+//     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
-    Route::get('/category/trash', [CategoryController::class, 'trash'])
-    ->name('category.trash');
+//     Route::get('/category/trash', [CategoryController::class, 'trash'])
+//     ->name('category.trash');
 
-    Route::put('/category/{category}/restore', [CategoryController::class, 'restore'])
-    ->name('category.restore');
+//     Route::put('/category/{category}/restore', [CategoryController::class, 'restore'])
+//     ->name('category.restore');
 
-    Route::delete('/category/{category}/force-delete', 
-    [CategoryController::class, 'forceDelete'])
-    ->name('category.force-delete');
+//     Route::delete('/category/{category}/force-delete', 
+//     [CategoryController::class, 'forceDelete'])
+//     ->name('category.force-delete');
 
-    Route::get('products/import', [ImportProductController::class, 'index'])
-    ->name('products.import');
+//     Route::get('products/import', [ImportProductController::class, 'index'])
+//     ->name('products.import');
 
-    Route::post('products/import', [ImportProductController::class, 'store']);
+//     Route::post('products/import', [ImportProductController::class, 'store']);
 
-    Route::resources([
-        'category' => CategoryController::class,
-        'products' => ProductController::class,
-        'roles' => RolesController::class,
-        'admins' => AdminController::class,
-    ]);
+//     Route::resources([
+//         'category' => CategoryController::class,
+//         'products' => ProductController::class,
+//         'roles' => RolesController::class,
+//         'admins' => AdminController::class,
+//     ]);
 
-});
+// });
