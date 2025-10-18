@@ -13,7 +13,7 @@ jobs:
       with:
         host: 13.49.21.197
         username: auto_wash
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        key: ${{ secrets.SSH_KEY }}
         port: 22
         script: |
           cd /home/auto_wash
