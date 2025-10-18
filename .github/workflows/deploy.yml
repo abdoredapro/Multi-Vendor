@@ -11,10 +11,9 @@ jobs:
     - name: Deploy using ssh
       uses: appleboy/ssh-action@v1.1.0
       with:
-        host: 13.49.21.197
-        username: auto_wash
-        key: ${{ secrets.SSH_MY_KEY }}
-        port: 22
+        host: ${{  secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           cd /home/auto_wash
           ./redeploy.sh
