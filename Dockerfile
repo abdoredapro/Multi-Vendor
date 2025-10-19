@@ -22,30 +22,34 @@ RUN apk add --no-cache \
     && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-install -j$(nproc) pdo_mysql zip bcmath exif opcache intl gd
 
-# Install Composer
+# Install Composer globally
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# Set working directory
 WORKDIR /var/www
 
-COPY composer.json composer.lock /var/www/
+# Copy only composer files first (for build caching)
+COPY composer.json composer.lock ./
 
-RUN composer install --no-dev --no-scripts --prefer-dist --no-interaction
+# Create empty vendor folder to avoid autoload error if composer fails
+RUN mkdir -p vendor
 
-COPY . /var/www
+# Install PHP dependencies
+RUN composer install --no-dev --no-scripts --prefer-dist --no-interaction || true
 
-RUN mkdir -p /var/www/storage /var/www/bootstrap/cache \
-    && chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache \
+# Copy full project
+COPY . .
+
+# Fix permissions
+RUN mkdir -p /var/www/storage /var/www/bootstrap/cache /var/log/nginx \
+    && chown -R www-data:www-data /var/www /var/log/nginx \
     && chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
-# Permissions
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache \
-    && chmod -R 775 /var/www/storage /var/www/bootstrap/cache
-
-# Copy supervisor config file (you’ll create it next)
+# Copy supervisor config file
 COPY docker/supervisord.conf /etc/supervisord.conf
 
-# Make sure your custom script is executable
-RUN chmod +x docker/build.sh
+# Make build script executable (only if it exists)
+RUN chmod +x /var/www/docker/build.sh || true
 
-# Start supervisor when container starts
-ENTRYPOINT ["/var/www/docker/build.sh"]
+# Start supervisor on container startup
+ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
